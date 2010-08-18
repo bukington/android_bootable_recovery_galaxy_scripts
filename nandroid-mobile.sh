@@ -70,7 +70,6 @@
 # 9.  print success.
 
 
-DEVICEID=foo
 RECOVERY=foo
 
 SUBNAME=""
@@ -109,10 +108,8 @@ echo ""
 echo "nandroid-mobile for Samsung Galaxy"
 echo ""
 
-DEVICEID=`cat /proc/cmdline | sed "s/.*serialno=//" | cut -d" " -f1`
-
 # This is the default repository for backups
-BACKUPPATH="/sdcard/nandroid/$DEVICEID"
+BACKUPPATH="/sdcard/nandroid"
 
 
 # Cache,Boot,Data,Userdata,Recovery,System,Splash1,Splash2
@@ -165,7 +162,7 @@ for option in $(getopt --name="nandroid-mobile v2.1" -l norecovery -l noboot -l 
             echo ""
             echo "-p | --path DIR            Requires an ARGUMENT, which is the path to where "
             echo "                           the backups are stored, can be used"
-            echo "                           when the default path /sdcard/nandroid/$DEVICEID "
+            echo "                           when the default path /sdcard/nandroid "
             echo "                           needs to be changed"
             echo ""
             echo "-b | --backup              Will store a full system backup on $BACKUPPATH"
@@ -572,14 +569,9 @@ if [ "$COMPRESS" == 1 ]; then
 fi
 
 # 1
-DEVICEID=`cat /proc/cmdline | sed "s/.*serialno=//" | cut -d" " -f1`
 RECOVERY=`cat /proc/cmdline | grep "androidboot.mode=recovery"`
 if [ "$RECOVERY" == "foo" ]; then
 	echo "Error: Must be in recovery mode, aborting"
-	exit 1
-fi
-if [ "$DEVICEID" == "foo" ]; then
-	echo "Error: device id not found in /proc/cmdline, aborting"
 	exit 1
 fi
 if [ ! "`id -u 2>/dev/null`" == "0" ]; then
