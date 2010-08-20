@@ -1097,7 +1097,7 @@ if [ "$COMPRESS" == 1 -o "$DELETE" == 1 ]; then
 	echo "Error mounting /sdcard read-write, cleaning up..."; umount /system /data /sdcard; exit 1
     fi
 
-    echo "The current size of /sdcard FAT32 filesystem is `du /sdcard | tail -1 | cut -f 1 -d '/'`Kb"
+    echo "The current size of /sdcard FAT32 filesystem is `df -h |grep sdcard | awk '{print $3}'`"
     echo ""
 
     # find the oldest backup, but show the user other options
@@ -1169,7 +1169,7 @@ if [ "$COMPRESS" == 1 -o "$DELETE" == 1 ]; then
              rm -rf $RESTOREPATH
              echo ""
              echo "$RESTOREPATH has been permanently removed from your SDCARD."
-             echo "Post deletion size of the /sdcard FAT32 filesystem is `du /sdcard | tail -1 | cut -f 1 -d '/'`Kb"
+             echo "Post deletion size of the /sdcard FAT32 filesystem is `df -h |grep sdcard | awk '{print $3}'`"
          else 
              if [ "$ANSWER" == "no" -o "$ANSWER" == "NO" -o "$ANSWER" == "No" ]; then
                  echo "The chosen backup will NOT be removed."
