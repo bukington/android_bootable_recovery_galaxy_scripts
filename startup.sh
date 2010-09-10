@@ -1,4 +1,4 @@
-#!/system/bin/bash
+#!/sbin/sh
 # Startup script launched at recovery startup
 
 NANDROID_PATH="/sdcard/nandroid"
@@ -8,7 +8,7 @@ if [ -e "${NANDROID_PATH}/${DEVICE_ID}" ];
 then
   echo "Old nandroid directory layout detected, migrating"
   cd ${NANDROID_PATH};
-  find "${DEVICE_ID}" -mindepth 1 -maxdepth 1 | while read dir;
+  /sbin/busybox find "${DEVICE_ID}" -mindepth 1 -maxdepth 1 | while read dir;
   do
     BKP=`basename $dir`;
     SLOT="${BKP:0:5}";
